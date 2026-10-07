@@ -11,14 +11,16 @@ export default function ContactSection() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
+  const [errorMsg, setErrorMsg] = useState('');
   const [submitted, setSubmitted] = useState(false);
 
   const handleSubmitInquiry = (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim() || !email.trim() || !message.trim()) {
-      alert('Kindly fill in all the inquiry inputs to submit.');
+      setErrorMsg('Kindly fill in all the inquiry fields before submitting.');
       return;
     }
+    setErrorMsg('');
     setSubmitted(true);
     setName('');
     setEmail('');
@@ -143,6 +145,12 @@ export default function ContactSection() {
                   <h3 className="text-lg font-black text-slate-900">Submit an Inquiry</h3>
                   <p className="text-xs text-slate-500 font-medium">Any administrative question? Write to us directly and safely.</p>
                 </div>
+
+                {errorMsg && (
+                  <div className="p-3 bg-rose-50 border border-rose-200 text-rose-700 text-xs rounded-xl font-medium">
+                    {errorMsg}
+                  </div>
+                )}
 
                 <div className="grid sm:grid-cols-2 gap-5">
                   <div className="space-y-1.5">
