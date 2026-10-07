@@ -20,9 +20,17 @@ export default function AppointmentList({ onGoToBooking, newBookingReference }: 
 
   // Load appointments from LocalStorage
   const loadAppointments = () => {
-    const cachedStore = localStorage.getItem('vinayaka_appointments');
-    if (cachedStore) {
-      setAppointments(JSON.parse(cachedStore));
+    try {
+      const cachedStore = localStorage.getItem('vinayaka_appointments');
+      if (cachedStore) {
+        const parsed = JSON.parse(cachedStore);
+        if (Array.isArray(parsed)) {
+          setAppointments(parsed);
+        }
+      }
+    } catch (e) {
+      console.warn('Failed to parse appointments from localStorage', e);
+      setAppointments([]);
     }
   };
 
